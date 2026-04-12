@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplix Cinema - Бронювання квитків</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  </head>
+  <body>
+    <form method="POST" action="">
+      {% csrf_token %} {% if msg %}
+      <p style="color: green">{{ msg }}</p>
+      {% endif %}
+
+      <div class="form-group">
+        <p>Тема звернення</p>
+        <select id="subject" name="subject" required>
+          <option value="">Оберіть тему</option>
+          <option value="site_problem">Проблеми з сайтом</option>
+          <option value="payment_problem">Проблеми з оплатою</option>
+          <option value="other">Інше</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <p>Ім'я</p>
+        <input
+          type="text"
+          id="first_name"
+          name="first_name"
+          placeholder="Введіть ваше ім'я"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <p>Прізвище</p>
+        <input
+          type="text"
+          id="last_name"
+          name="last_name"
+          placeholder="Введіть ваше прізвище"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <p>Електронна пошта</p>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="example@email.com"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <p>Опис проблеми</p>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Детально опишіть вашу проблему..."
+          required
+        ></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Відправити</button>
+    </form>
+    <header>
+      <h1>Multiplix</h1>
+      <nav>
+        <a href="/">Головна</a>
+        <a href="/movies/">Фільми</a>
+        <a href="#">Розклад</a>
+        <a href="/profile/" class="profile-link"><i class="fas fa-user"></i> Профіль</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h2>Ласкаво просимо до Multiplix</h2>
+        <p>Забронюйте квитки на найновітніші фільми.</p>
+      </section>
+      <section class="movies">
+        <h2>Фільми зараз</h2>
+        <div class="movie-list">
+          <div class="movie">
+            <img src="{% static 'main/imgs/Квітки.png' %}" />
+            <h3>Фільм 1</h3>
+            <p>Опис фільму 1.</p>
+            <button>Забронювати</button>
+          </div>
+          <div class="movie">
+            <img src="{% static 'main/imgs/Квітки.png' %}" />
+            <h3>Фільм 2</h3>
+            <p>Опис фільму 2.</p>
+            <button>Забронювати</button>
+          </div>
+          <div class="movie">
+            <img src="{% static 'main/imgs/Квітки.png' %}" />
+            <h3>Фільм 3</h3>
+            <p>Опис фільму 3.</p>
+            <button>Забронювати</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>2025 Multiplix Cinema. Всі права захищені.</p>
+    </footer>
+  </body>
+</html>

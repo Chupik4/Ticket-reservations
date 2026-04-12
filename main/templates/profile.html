@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Профіль - Multiplix Cinema</title>
+                          <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+                          <link rel="stylesheet" href="{% static 'main/css/profile.css' %}" />
+                          <link
+                            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
+                            rel="stylesheet"
+                          />
+                          <link
+                            rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Multiplix</h1>
+      <nav>
+        <a href="/">Головна</a>
+        <a href="/movies/">Фільми</a>
+        <a href="#">Розклад</a>
+        <a href="#" class="profile-link"
+          ><i class="fas fa-user"></i> Профіль</a
+        >
+      </nav>
+    </header>
+
+    <main class="profile-container">
+      <div class="profile-header">
+        <div class="avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h2 class="profile-name">Users</h2>
+        <p class="profile-email">example@example.com</p>
+      </div>
+
+      <div class="profile-info">
+        <div class="info-grid">
+          <div class="info-section">
+            <h3><i class="fas fa-info-circle"></i> Основна інформація</h3>
+            <div class="info-item">
+              <span class="info-label">Ім'я:</span>
+              <span class="info-value">Users</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email:</span>
+              <span class="info-value">user@example.com</span>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3><i class="fas fa-ticket-alt"></i> Мої бронювання</h3>
+            <div class="info-item">
+              <span class="info-label">Активні бронювання:</span>
+              <span class="info-value">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Історія:</span>
+              <span class="info-value">0 бронювань</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary">
+          <i class="fas fa-edit"></i> Редагувати профіль
+        </button>
+        <button class="btn btn-secondary">
+          <i class="fas fa-sign-out-alt"></i> Вихід
+        </button>
+      </div>
+    </main>
+
+    <footer>
+      <p>2025 Multiplix Cinema. Всі права захищені.</p>
+    </footer>
+  </body>
+</html>

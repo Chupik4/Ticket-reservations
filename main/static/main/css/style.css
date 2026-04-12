@@ -1,0 +1,85 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+}
+
+header {
+  background-color: #111;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #9e4545;
+}
+
+nav {
+  margin-top: 1em;
+}
+
+nav a {
+  color: #fff;
+  margin: 0 1em;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #4cc9f0;
+}
+
+nav .profile-link {
+  color: #4cc9f0;
+  margin-left: 1rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 2em;
+  background-color: #222;
+}
+
+.movies {
+  padding: 2em;
+}
+
+.movie-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.movie {
+  background-color: #333;
+  padding: 1em;
+  margin: 1em;
+  text-align: center;
+  width: 200px;
+}
+
+.movie img {
+  width: 100%;
+  height: auto;
+}
+
+button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+footer {
+  background-color: #111;
+  text-align: center;
+  padding: 1em;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
