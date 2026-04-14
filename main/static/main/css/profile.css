@@ -106,6 +106,80 @@ body {
   font-weight: 600;
 }
 
+<<<<<<< HEAD
+=======
+.bookings-list {
+  margin-top: 1rem;
+}
+
+.booking-item {
+  background-color: #444;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.booking-item p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.edit-form {
+  margin-top: 1rem;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #222;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80%;
+  overflow-y: auto;
+  border-radius: 10px;
+  color: white;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: white;
+  text-decoration: none;
+}
+
+.edit-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.edit-form label {
+  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+
+
+>>>>>>> 782cb0e (Initial commit)
 .action-buttons {
   display: flex;
   gap: 1rem;
@@ -147,4 +221,106 @@ nav .profile-link {
   .action-buttons {
     flex-direction: column;
   }
+<<<<<<< HEAD
+=======
+}
+
+
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 3px 0;
+  transition: 0.3s;
+}
+
+#nav-menu {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  #nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #111;
+    padding: 1rem;
+  }
+
+  #nav-menu.active {
+    display: flex;
+  }
+}
+
+/* Menu button */
+.menu-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.menu-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Success message */
+.success-msg {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+/* Contact overlay */
+.contact-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.contact-content {
+  background-color: #222;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  color: #fff;
+  position: relative;
+}
+
+.close-contact {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close-contact:hover {
+  color: #fff;
+>>>>>>> 782cb0e (Initial commit)
 }

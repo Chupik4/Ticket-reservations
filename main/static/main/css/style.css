@@ -67,12 +67,100 @@ nav .profile-link {
   height: auto;
 }
 
+<<<<<<< HEAD
 button {
+=======
+button, .book-btn {
+>>>>>>> 782cb0e (Initial commit)
   background-color: #ff0000;
   color: #fff;
   border: none;
   padding: 0.5em 1em;
   cursor: pointer;
+<<<<<<< HEAD
+=======
+  text-decoration: none;
+  display: inline-block;
+}
+
+.form-group {
+  margin-bottom: 1em;
+}
+
+.form-group p {
+  margin: 0 0 0.5em 0;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5em;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2em;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 3px 0;
+  transition: 0.3s;
+}
+
+#nav-menu {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  #nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #111;
+    padding: 1rem;
+  }
+
+  #nav-menu.active {
+    display: flex;
+  }
+>>>>>>> 782cb0e (Initial commit)
 }
 
 footer {
@@ -82,4 +170,8 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 782cb0e (Initial commit)

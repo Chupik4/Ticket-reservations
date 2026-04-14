@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Профіль - Multiplix Cinema</title>
+<<<<<<< HEAD
                           <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
                           <link rel="stylesheet" href="{% static 'main/css/profile.css' %}" />
                           <link
@@ -18,37 +19,129 @@
   </head>
   <body>
     <header>
+=======
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/profile.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+      #edit-toggle { display: none; }
+      .edit-form { display: none; }
+      #edit-toggle:checked ~ .edit-form { display: block; }
+      #edit-toggle:checked ~ .btn-edit-label { display: none; }
+
+      @keyframes fadeout {
+        0%   { opacity: 1; }
+        75%  { opacity: 1; }
+        100% { opacity: 0; pointer-events: none; }
+      }
+      .success-msg {
+        animation: fadeout 4s forwards;
+      }
+
+      dialog {
+        border: none;
+        border-radius: 8px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+      }
+      dialog::backdrop {
+        background: rgba(0,0,0,0.5);
+      }
+      dialog .close-btn {
+        float: right;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        line-height: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <button class="menu-btn" onclick="document.getElementById('contact-dialog').showModal()">
+        Меню
+      </button>
+>>>>>>> 782cb0e (Initial commit)
       <h1>Multiplix</h1>
       <nav>
         <a href="/">Головна</a>
         <a href="/movies/">Фільми</a>
         <a href="#">Розклад</a>
+<<<<<<< HEAD
         <a href="#" class="profile-link"
           ><i class="fas fa-user"></i> Профіль</a
         >
+=======
+        <a href="#" class="profile-link"><i class="fas fa-user"></i> Профіль</a>
+>>>>>>> 782cb0e (Initial commit)
       </nav>
     </header>
 
     <main class="profile-container">
+<<<<<<< HEAD
+=======
+      {% if contact_msg %}
+      <div class="success-msg">{{ contact_msg }}</div>
+      {% endif %}
+
+>>>>>>> 782cb0e (Initial commit)
       <div class="profile-header">
         <div class="avatar">
           <i class="fas fa-user"></i>
         </div>
+<<<<<<< HEAD
         <h2 class="profile-name">Users</h2>
         <p class="profile-email">example@example.com</p>
+=======
+        <h2 class="profile-name">{{ profile_name }}</h2>
+        <p class="profile-email">{{ profile_email }}</p>
+>>>>>>> 782cb0e (Initial commit)
       </div>
 
       <div class="profile-info">
         <div class="info-grid">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 782cb0e (Initial commit)
           <div class="info-section">
             <h3><i class="fas fa-info-circle"></i> Основна інформація</h3>
             <div class="info-item">
               <span class="info-label">Ім'я:</span>
+<<<<<<< HEAD
               <span class="info-value">Users</span>
             </div>
             <div class="info-item">
               <span class="info-label">Email:</span>
               <span class="info-value">user@example.com</span>
+=======
+              <span class="info-value">{{ profile_name }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email:</span>
+              <span class="info-value">{{ profile_email }}</span>
+            </div>
+
+            <input type="checkbox" id="edit-toggle">
+
+            <div class="edit-form">
+              <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="name">Нове ім'я:</label>
+                  <input type="text" id="name" name="name" value="{{ profile_name }}" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Новий email:</label>
+                  <input type="email" id="email" name="email" value="{{ profile_email }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+              </form>
+>>>>>>> 782cb0e (Initial commit)
             </div>
           </div>
 
@@ -56,6 +149,7 @@
             <h3><i class="fas fa-ticket-alt"></i> Мої бронювання</h3>
             <div class="info-item">
               <span class="info-label">Активні бронювання:</span>
+<<<<<<< HEAD
               <span class="info-value">0</span>
             </div>
             <div class="info-item">
@@ -63,10 +157,49 @@
               <span class="info-value">0 бронювань</span>
             </div>
           </div>
+=======
+              <span class="info-value">{{ active_bookings }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Історія:</span>
+              <span class="info-value">{{ history }}</span>
+            </div>
+            {% if bookings %}
+            <details>
+              <summary class="btn btn-secondary" style="cursor:pointer; list-style:none; display:inline-block; margin-top:0.75rem;">
+                <i class="fas fa-list"></i> Переглянути бронювання
+              </summary>
+              <div class="bookings-list" style="margin-top:0.75rem;">
+                {% for booking in bookings %}
+                <div class="booking-item">
+                  <p><strong>Фільм:</strong> {{ booking.movie }}</p>
+                  <p><strong>Ім'я:</strong> {{ booking.first_name }} {{ booking.last_name }}</p>
+                  <p><strong>Email:</strong> {{ booking.email }}</p>
+                  <p><strong>Дата:</strong> {{ booking.date }}</p>
+                  <p><strong>Час:</strong> {{ booking.time }}</p>
+                  <p><strong>Місць:</strong> {{ booking.seats }}</p>
+                  <form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="cancel_id" value="{{ booking.id }}">
+                    <button type="submit" class="btn btn-secondary"
+                      style="background-color:red;color:white;"
+                      onclick="return confirm('Скасувати бронювання?')">
+                      Скасувати
+                    </button>
+                  </form>
+                </div>
+                {% endfor %}
+              </div>
+            </details>
+            {% endif %}
+          </div>
+
+>>>>>>> 782cb0e (Initial commit)
         </div>
       </div>
 
       <div class="action-buttons">
+<<<<<<< HEAD
         <button class="btn btn-primary">
           <i class="fas fa-edit"></i> Редагувати профіль
         </button>
@@ -76,6 +209,51 @@
       </div>
     </main>
 
+=======
+        <label for="edit-toggle" class="btn btn-primary btn-edit-label" style="cursor:pointer;">
+          <i class="fas fa-edit"></i> Редагувати профіль
+        </label>
+      </div>
+    </main>
+
+    <dialog id="contact-dialog">
+      <button class="close-btn" formmethod="dialog"
+        onclick="document.getElementById('contact-dialog').close()">&times;</button>
+      <h2>Зв'язатися з нами</h2>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <p>Тема звернення</p>
+          <select id="subject" name="subject" required>
+            <option value="">Оберіть тему</option>
+            <option value="site_problem">Проблеми з сайтом</option>
+            <option value="payment_problem">Проблеми з оплатою</option>
+            <option value="other">Інше</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <p>Ім'я</p>
+          <input type="text" id="first_name" name="first_name" placeholder="Введіть ваше ім'я" required />
+        </div>
+        <div class="form-group">
+          <p>Прізвище</p>
+          <input type="text" id="last_name" name="last_name" placeholder="Введіть ваше прізвище" required />
+        </div>
+        <div class="form-group">
+          <p>Електронна пошта</p>
+          <input type="email" id="contact_email" name="email" placeholder="example@email.com" required />
+        </div>
+        <div class="form-group">
+          <p>Опис проблеми</p>
+          <textarea id="description" name="description" placeholder="Детально опишіть вашу проблему..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Відправити</button>
+        <button type="button" class="btn btn-secondary"
+          onclick="document.getElementById('contact-dialog').close()">Скасувати</button>
+      </form>
+    </dialog>
+
+>>>>>>> 782cb0e (Initial commit)
     <footer>
       <p>2025 Multiplix Cinema. Всі права захищені.</p>
     </footer>

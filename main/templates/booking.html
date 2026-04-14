@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplix Cinema - Бронювання квитків</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Multiplix</h1>
+      <nav>
+        <a href="/">Головна</a>
+        <a href="/movies/">Фільми</a>
+        <a href="#">Розклад</a>
+        <a href="/profile/" class="profile-link"><i class="fas fa-user"></i> Профіль</a>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h2>Бронювання квитків</h2>
+        {% if history %}
+        <p>{{ history }}</p>
+        {% endif %}
+        {% if msg %}
+        <p>{{ msg }}</p>
+        {% endif %}
+      </section>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <p>Фільм</p>
+          <input
+            type="text"
+            id="movie"
+            name="movie"
+            placeholder="Назва фільму"
+            value="{{ request.GET.movie }}"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Ім'я</p>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder="Введіть ваше ім'я"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Прізвище</p>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            placeholder="Введіть ваше прізвище"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Електронна пошта</p>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@email.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Дата</p>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Час</p>
+          <input
+            type="time"
+            id="time"
+            name="time"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <p>Кількість місць</p>
+          <input
+            type="number"
+            id="seats"
+            name="seats"
+            min="1"
+            value="1"
+            required
+          />
+        </div>
+        <button type="submit" class="submit-btn">Забронювати</button>
+      </form>
+    </main>
+    <footer>
+      <p>2025 Multiplix Cinema. Всі права захищені.</p>
+    </footer>
+  </body>
+</html>
