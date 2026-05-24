@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Multiplix Cinema{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}?v=2" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    {% block extra_css %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+  </head>
+  <body class="{% block body_class %}{% endblock %}">
+    <header class="app-header">
+      <a class="app-logo" href="/">Multiplix</a>
+      {% block app_nav %}
+      <nav class="app-nav">
+        <a href="/profile/"><i class="fas fa-user"></i> Профіль</a>
+      </nav>
+      {% endblock %}
+      {% block header_extra %}{% endblock %}
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="app-footer">
+      <p>2026 Multiplix Cinema. Всі права захищені.</p>
+    </footer>
+  </body>
+</html>

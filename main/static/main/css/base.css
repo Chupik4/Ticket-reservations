@@ -1,0 +1,95 @@
+:root {
+  --bg: #050507;
+  --panel: #15161c;
+  --panel-soft: #20222a;
+  --line: #30323c;
+  --text: #f8f9fb;
+  --muted: #a6abb8;
+  --red: #ff1717;
+  --brand: #9e4545;
+  --blue: #4cc9f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 23, 23, 0.14), transparent 26%),
+    radial-gradient(circle at 88% 18%, rgba(76, 201, 240, 0.14), transparent 28%),
+    var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-header {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(14, 15, 20, 0.94);
+}
+
+.app-logo {
+  color: var(--brand);
+  font-size: 32px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.app-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.app-nav a:hover {
+  color: var(--blue);
+}
+
+.app-footer {
+  margin-top: auto;
+  padding: 22px;
+  border-top: 1px solid var(--line);
+  background: #0e0f14;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (max-width: 680px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .app-nav {
+    margin-left: 0;
+  }
+}

@@ -1,110 +1,134 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Multiplix Cinema - Бронювання квитків</title>
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Multiplix</h1>
-      <nav>
-        <a href="/">Головна</a>
-        <a href="/movies/">Фільми</a>
-        <a href="#">Розклад</a>
-        <a href="/profile/" class="profile-link"><i class="fas fa-user"></i> Профіль</a>
-      </nav>
-    </header>
-    <main>
-      <section class="hero">
-        <h2>Бронювання квитків</h2>
-        {% if history %}
-        <p>{{ history }}</p>
-        {% endif %}
-        {% if msg %}
-        <p>{{ msg }}</p>
-        {% endif %}
+
+{% block title %}Multiplix - вибір місць{% endblock %}
+{% block body_class %}booking-body{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/booking.css' %}?v=5" />
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'main/js/booking.js' %}?v=3" defer></script>
+{% endblock %}
+{% block app_nav %}{% endblock %}
+{% block header_extra %}
+<div class="timer">
+  <i class="fas fa-stopwatch"></i>
+  <span id="timer">07:00</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<form class="booking-page" method="POST" action="" data-occupied="{{ occupied_seats|join:',' }}">
+  {% csrf_token %}
+  <input type="hidden" name="movie" value="{{ movie }}" />
+  <input type="hidden" name="cinema" value="{{ cinema }}" />
+  <input type="hidden" name="hall" value="{{ hall }}" />
+  <input type="hidden" name="date" value="{{ date }}" />
+  <input type="hidden" name="time" value="{{ time }}" />
+  <input type="hidden" id="selected_seats" name="selected_seats" value="" />
+  <input type="hidden" id="total_price" name="total_price" value="0" />
+
+  <main class="layout">
+    <section class="content">
+      <div class="steps" aria-label="Кроки бронювання">
+        <span class="active">1. Місця</span>
+        <span>2. Дані</span>
+        <span>3. Оплата</span>
+      </div>
+
+      <section class="session-card">
+        <div class="poster" aria-hidden="true">
+          <span class="age">18+</span>
+          <strong>{{ movie }}</strong>
+        </div>
+        <div class="session-info">
+          <p class="eyebrow">Бронювання квитків</p>
+          <h1>{{ movie }}</h1>
+          <div class="tags">
+            <span>2D</span>
+            <span>SDH</span>
+          </div>
+          <div class="facts">
+            <article>
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <small>Зал №{{ hall }}</small>
+                <strong>{{ cinema }}</strong>
+              </div>
+            </article>
+            <article>
+              <i class="fas fa-calendar-alt"></i>
+              <div>
+                <small>03.06.2026</small>
+                <strong>Середа</strong>
+              </div>
+            </article>
+            <article>
+              <i class="far fa-clock"></i>
+              <div>
+                <small>Час</small>
+                <strong>{{ time_range }}</strong>
+              </div>
+            </article>
+          </div>
+          {% if msg %}
+          <p class="notice success" id="booking-success">{{ msg }}</p>
+          {% endif %}
+          {% if error %}
+          <p class="notice error">{{ error }}</p>
+          {% endif %}
+        </div>
       </section>
-      <form method="POST" action="">
-        {% csrf_token %}
-        <div class="form-group">
-          <p>Фільм</p>
-          <input
-            type="text"
-            id="movie"
-            name="movie"
-            placeholder="Назва фільму"
-            value="{{ request.GET.movie }}"
-            required
-          />
+
+      <section class="hall-card">
+        <div class="legend">
+          <span><b class="good"></b> GOOD <small>210 грн</small></span>
+          <span><b class="lux"></b> SUPER LUX <small>330 грн</small></span>
         </div>
-        <div class="form-group">
-          <p>Ім'я</p>
-          <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            placeholder="Введіть ваше ім'я"
-            required
-          />
+        <div class="screen"><span>ЕКРАН</span></div>
+        <div class="seat-map" id="seat-map" aria-label="Схема залу"></div>
+      </section>
+    </section>
+
+    <aside class="order-panel">
+      <section class="summary">
+        <div class="summary-head">
+          <h2>Ваше бронювання</h2>
+          <strong><span id="ticket-count">0</span> місць</strong>
         </div>
-        <div class="form-group">
-          <p>Прізвище</p>
-          <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            placeholder="Введіть ваше прізвище"
-            required
-          />
+        <div class="empty-state" id="empty-state">
+          <i class="fas fa-ticket-alt"></i>
+          <p>Оберіть місця на схемі залу.</p>
         </div>
-        <div class="form-group">
-          <p>Електронна пошта</p>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@email.com"
-            required
-          />
+        <div class="ticket-list" id="ticket-list"></div>
+      </section>
+
+      <section class="buyer">
+        <h3>Дані покупця</h3>
+        <label>
+          Ім'я
+          <input type="text" name="first_name" placeholder="Ваше ім'я" required />
+        </label>
+        <label>
+          Прізвище
+          <input type="text" name="last_name" placeholder="Ваше прізвище" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="example@email.com" required />
+        </label>
+      </section>
+
+      <footer class="payment">
+        <div>
+          <span>Всього до сплати</span>
+          <strong><span id="total-label">0</span> грн</strong>
         </div>
-        <div class="form-group">
-          <p>Дата</p>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <p>Час</p>
-          <input
-            type="time"
-            id="time"
-            name="time"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <p>Кількість місць</p>
-          <input
-            type="number"
-            id="seats"
-            name="seats"
-            min="1"
-            value="1"
-            required
-          />
-        </div>
-        <button type="submit" class="submit-btn">Забронювати</button>
-      </form>
-    </main>
-    <footer>
-      <p>2025 Multiplix Cinema. Всі права захищені.</p>
-    </footer>
-  </body>
-</html>
+        <button class="continue-btn" id="continue-btn" type="submit" disabled>
+          Забронювати
+        </button>
+      </footer>
+    </aside>
+  </main>
+</form>
+{% endblock %}

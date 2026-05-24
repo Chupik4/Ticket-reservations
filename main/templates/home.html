@@ -1,135 +1,102 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Multiplix Cinema - Бронювання квитків</title>
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  </head>
-  <body>
-<<<<<<< HEAD
-    <form method="POST" action="">
-      {% csrf_token %} {% if msg %}
-      <p style="color: green">{{ msg }}</p>
-      {% endif %}
 
-      <div class="form-group">
-        <p>Тема звернення</p>
-        <select id="subject" name="subject" required>
-          <option value="">Оберіть тему</option>
-          <option value="site_problem">Проблеми з сайтом</option>
-          <option value="payment_problem">Проблеми з оплатою</option>
-          <option value="other">Інше</option>
-        </select>
+{% block title %}Multiplix Cinema{% endblock %}
+{% block body_class %}home-page{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=6" />
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'main/js/home.js' %}?v=1" defer></script>
+{% endblock %}
+
+{% block content %}
+<main class="home-main">
+  <section class="home-hero" data-movie-carousel>
+    <div class="home-hero-copy">
+      <p class="home-kicker" data-movie-kicker>Прем'єра тижня</p>
+      <h1 data-movie-title>Дуже страшне кіно</h1>
+      <p class="home-lead" data-movie-description>
+        Відкрийте для себе нову комедію жахів, яка вже підкорила серця глядачів.
+        Ідеальний вибір для вечірнього перегляду з друзями.
+      </p>
+      <div class="home-actions">
+        <a class="home-btn primary" href="/booking/?movie=Дуже%20страшне%20кіно" data-booking-link>Забронювати місця</a>
       </div>
+    </div>
 
-      <div class="form-group">
-        <p>Ім'я</p>
-        <input
-          type="text"
-          id="first_name"
-          name="first_name"
-          placeholder="Введіть ваше ім'я"
-          required
-        />
-      </div>
+    <div class="show-carousel">
+      <button class="carousel-btn prev" type="button" data-carousel-prev aria-label="Попередній фільм">
+        <i class="fas fa-chevron-left"></i>
+      </button>
 
-      <div class="form-group">
-        <p>Прізвище</p>
-        <input
-          type="text"
-          id="last_name"
-          name="last_name"
-          placeholder="Введіть ваше прізвище"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <p>Електронна пошта</p>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="example@email.com"
-          required
-        />
-      </div>
-
-      <div class="form-group">
-        <p>Опис проблеми</p>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Детально опишіть вашу проблему..."
-          required
-        ></textarea>
-      </div>
-
-      <button type="submit" class="submit-btn">Відправити</button>
-    </form>
-=======
-
->>>>>>> 782cb0e (Initial commit)
-    <header>
-      <h1>Multiplix</h1>
-      <nav>
-        <a href="/">Головна</a>
-        <a href="/movies/">Фільми</a>
-        <a href="#">Розклад</a>
-        <a href="/profile/" class="profile-link"><i class="fas fa-user"></i> Профіль</a>
-      </nav>
-    </header>
-    <main>
-      <section class="hero">
-        <h2>Ласкаво просимо до Multiplix</h2>
-        <p>Забронюйте квитки на найновітніші фільми.</p>
-      </section>
-      <section class="movies">
-        <h2>Фільми зараз</h2>
-        <div class="movie-list">
-          <div class="movie">
-            <img src="{% static 'main/imgs/Квітки.png' %}" />
-            <h3>Фільм 1</h3>
-            <p>Опис фільму 1.</p>
-<<<<<<< HEAD
-            <button>Забронювати</button>
-=======
-            <button class="book-btn" onclick="window.location.href='/booking/?movie=Фільм 1'">Забронювати</button>
->>>>>>> 782cb0e (Initial commit)
-          </div>
-          <div class="movie">
-            <img src="{% static 'main/imgs/Квітки.png' %}" />
-            <h3>Фільм 2</h3>
-            <p>Опис фільму 2.</p>
-<<<<<<< HEAD
-            <button>Забронювати</button>
-=======
-            <button class="book-btn" onclick="window.location.href='/booking/?movie=Фільм 2'">Забронювати</button>
->>>>>>> 782cb0e (Initial commit)
-          </div>
-          <div class="movie">
-            <img src="{% static 'main/imgs/Квітки.png' %}" />
-            <h3>Фільм 3</h3>
-            <p>Опис фільму 3.</p>
-<<<<<<< HEAD
-            <button>Забронювати</button>
-=======
-            <button class="book-btn" onclick="window.location.href='/booking/?movie=Фільм 3'">Забронювати</button>
->>>>>>> 782cb0e (Initial commit)
-          </div>
+      <div class="show-card" aria-label="Картка сеансу">
+        <div class="show-poster" data-movie-poster>
+          <span class="rating" data-movie-rating>18+</span>
+          <div class="poster-light"></div>
+          <strong data-movie-card-title>Дуже страшне кіно</strong>
         </div>
-      </section>
-    </main>
-    <footer>
-      <p>2025 Multiplix Cinema. Всі права захищені.</p>
-    </footer>
-<<<<<<< HEAD
-=======
+        <div class="show-meta">
+          <span data-movie-format>2D</span>
+          <span data-movie-subtitle>SDH</span>
+          <span data-movie-hall>Зал №3</span>
+        </div>
+      </div>
 
+      <button class="carousel-btn next" type="button" data-carousel-next aria-label="Наступний фільм">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
 
->>>>>>> 782cb0e (Initial commit)
-  </body>
-</html>
+    <div class="carousel-dots" data-carousel-dots aria-label="Перемикання фільмів"></div>
+  </section>
+
+  <section class="schedule-strip" aria-label="Інформація про сеанс">
+    <article>
+      <i class="fas fa-map-marker-alt"></i>
+      <div>
+        <span>Кінотеатр</span>
+        <strong>Одеса, ТРЦ Gagarinn Plaza</strong>
+      </div>
+    </article>
+    <article>
+      <i class="fas fa-calendar-alt"></i>
+      <div>
+        <span>Дата</span>
+        <strong>03.06.2026, середа</strong>
+      </div>
+    </article>
+    <article>
+      <i class="far fa-clock"></i>
+      <div>
+        <span>Час</span>
+        <strong>18:40 - 20:15</strong>
+      </div>
+    </article>
+  </section>
+
+  <section class="home-section">
+    <div class="section-heading">
+      <p class="home-kicker">Сервіс</p>
+      <h2>Бронювання, яке пам'ятає ваш вибір</h2>
+    </div>
+    <div class="benefits">
+      <article>
+        <i class="fas fa-chair"></i>
+        <h3>Жива схема залу</h3>
+        <p>Вільні, вибрані та заброньовані місця видно одразу.</p>
+      </article>
+      <article>
+        <i class="fas fa-database"></i>
+        <h3>Збереження в базі</h3>
+        <p>Після перезаходу заброньовані крісла залишаються зайнятими.</p>
+      </article>
+      <article>
+        <i class="fas fa-ticket-alt"></i>
+        <h3>Швидке оформлення</h3>
+        <p>Вибрали місця, ввели дані покупця і готово.</p>
+      </article>
+    </div>
+  </section>
+</main>
+{% endblock %}
