@@ -1,8 +1,6 @@
 from django.db import IntegrityError, transaction
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
 
-from .forms import UserForm
 from .models import Booking, BookingSeat, Contact
 
 
@@ -74,18 +72,6 @@ def profile_view(request):
             "contact_msg": contact_msg,
         },
     )
-
-
-class PostListView(ListView):
-    model = Contact
-    template_name = "home.html"
-    context_object_name = "contacts"
-
-class PostdetailView(DetailView):
-    model = Contact
-    template_name = "home.html"
-    context_object_name = "contact"
-
 
 def simple_view(request):
     if request.method == "POST":
