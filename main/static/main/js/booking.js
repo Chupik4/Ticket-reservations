@@ -9,6 +9,8 @@ const totalInput = document.getElementById("total_price");
 const continueBtn = document.getElementById("continue-btn");
 const timer = document.getElementById("timer");
 const successMessage = document.getElementById("booking-success");
+const ageposter = document.querySelector(".session-card .poster .age"); 
+
 
 const occupied = new Set(
   bookingPage.dataset.occupied

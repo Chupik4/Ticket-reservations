@@ -1,7 +1,8 @@
 from django.db import IntegrityError, transaction
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import ListView, DetailView
 
+from .forms import UserForm
 from .models import Booking, BookingSeat, Contact
 
 
@@ -12,12 +13,73 @@ DEFAULT_DATE = "2026-06-03"
 DEFAULT_TIME = "18:40"
 DEFAULT_TIME_RANGE = "18:40 - 20:15"
 
+MOVIE_RATINGS = {
+    "Дуже страшне кіно": "18+",
+    "Нічний рейс": "16+",
+    "Місто світла": "12+",
+    "Космічна пригода": "6+",
+}
+
+
+def profile_view(request):
+    contact_msg = None
+
+    if request.method == "POST":
+
+        if "name" in request.POST:
+            name = request.POST.get("name")
+            email = request.POST.get("email")
+
+            request.session["profile_name"] = name
+            request.session["profile_email"] = email
+
+        elif "cancel_id" in request.POST:
+            booking_id = request.POST.get("cancel_id")
+            Booking.objects.filter(id=booking_id).delete()
+
+        elif "subject" in request.POST:
+            subject = request.POST.get("subject")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            email = request.POST.get("email")
+            description = request.POST.get("description")
+
+            Contact.objects.create(
+                subject=subject,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                description=description,
+            )
+
+            contact_msg = "Успішно відправлено! Очікуйте відповіді на пошті."
+
+    name = request.session.get("profile_name", "Users")
+    email = request.session.get("profile_email", "user@example.com")
+
+    bookings = Booking.objects.prefetch_related("seat_records").all()
+
+    count = bookings.count()
+    history = f"{count} бронювань"
+
+    return render(
+        request,
+        "profile.html",
+        {
+            "active_bookings": count,
+            "history": history,
+            "bookings": bookings,
+            "profile_name": name,
+            "profile_email": email,
+            "contact_msg": contact_msg,
+        },
+    )
+
 
 class PostListView(ListView):
     model = Contact
     template_name = "home.html"
     context_object_name = "contacts"
-
 
 class PostdetailView(DetailView):
     model = Contact
@@ -25,62 +87,40 @@ class PostdetailView(DetailView):
     context_object_name = "contact"
 
 
-def profile_view(request):
-    contact_msg = None
-    if request.method == "POST":
-        if "avatar_data" in request.POST:
-            avatar_data = request.POST.get("avatar_data")
-            if avatar_data:
-                request.session["profile_avatar"] = avatar_data
-        elif "name" in request.POST:
-            request.session["profile_name"] = request.POST.get("name")
-            request.session["profile_email"] = request.POST.get("email")
-        elif "cancel_id" in request.POST:
-            Booking.objects.filter(id=request.POST.get("cancel_id")).delete()
-        elif "subject" in request.POST:
-            Contact.objects.create(
-                subject=request.POST.get("subject"),
-                first_name=request.POST.get("first_name"),
-                last_name=request.POST.get("last_name"),
-                email=request.POST.get("email"),
-                description=request.POST.get("description"),
-            )
-            contact_msg = "Успішно відправлено! Очікуйте відповіді на пошті."
-
-    bookings = Booking.objects.prefetch_related("seat_records").all()
-    count = bookings.count()
-    return render(
-        request,
-        "profile.html",
-        {
-            "active_bookings": count,
-            "history": f"{count} бронювань",
-            "bookings": bookings,
-            "profile_name": request.session.get("profile_name", "Users"),
-            "profile_email": request.session.get("profile_email", "user@example.com"),
-            "profile_avatar": request.session.get("profile_avatar"),
-            "contact_msg": contact_msg,
-        },
-    )
-
-
 def simple_view(request):
     if request.method == "POST":
-        Contact.objects.create(
-            subject=request.POST.get("subject"),
-            first_name=request.POST.get("first_name"),
-            last_name=request.POST.get("last_name"),
-            email=request.POST.get("email"),
-            description=request.POST.get("description"),
-        )
-    elif request.method == "GET" and "search" in request.GET:
-        contacts = Contact.objects.filter(subject__icontains=request.GET.get("search"))
-        return render(request, "home.html", {"contacts": contacts})
-    return render(request, "home.html")
+        subject = request.POST.get("subject")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        description = request.POST.get("description")
 
+        Contact.objects.create(
+            subject=subject,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            description=description,
+        )
+
+    elif request.method == "GET" and "search" in request.GET:
+        search_query = request.GET.get("search")
+
+        contacts = Contact.objects.filter(
+            subject__icontains=search_query
+        )
+
+        return render(
+            request,
+            "home.html",
+            {"contacts": contacts},
+        )
+
+    return render(request, "home.html")
 
 def booking_view(request):
     movie = request.GET.get("movie") or DEFAULT_MOVIE
+
     cinema = DEFAULT_CINEMA
     hall = DEFAULT_HALL
     date = DEFAULT_DATE
@@ -92,8 +132,22 @@ def booking_view(request):
         hall = request.POST.get("hall") or hall
         date = request.POST.get("date") or date
         time = request.POST.get("time") or time
-        selected_list = parse_selected_seats(request.POST.get("selected_seats", ""))
-        occupied_seats = get_occupied_seats(movie, cinema, hall, date, time)
+
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+
+        selected_list = parse_selected_seats(
+            request.POST.get("selected_seats", "")
+        )
+
+        occupied_seats = get_occupied_seats(
+            movie,
+            cinema,
+            hall,
+            date,
+            time,
+        )
 
         if not selected_list:
             return render(
@@ -121,26 +175,31 @@ def booking_view(request):
                     date,
                     time,
                     occupied_seats,
-                    error="Одне з вибраних місць вже заброньоване. Оновіть сторінку і виберіть інше.",
+                    error="Одне з місць вже зайняте.",
                 ),
             )
 
         try:
             with transaction.atomic():
-                total_price = sum(get_seat_price(seat) for seat in selected_list)
+                total_price = sum(
+                    get_seat_price(seat)
+                    for seat in selected_list
+                )
+
                 booking = Booking.objects.create(
                     movie=movie,
                     cinema=cinema,
                     hall=hall,
-                    first_name=request.POST.get("first_name"),
-                    last_name=request.POST.get("last_name"),
-                    email=request.POST.get("email"),
+                    first_name=first_name,
+                    last_name=last_name,
+                    email=email,
                     date=date,
                     time=time,
                     seats=len(selected_list),
                     selected_seats=", ".join(selected_list),
                     total_price=total_price,
                 )
+
                 BookingSeat.objects.bulk_create(
                     [
                         BookingSeat(
@@ -157,6 +216,7 @@ def booking_view(request):
                         for seat in selected_list
                     ]
                 )
+
         except IntegrityError:
             return render(
                 request,
@@ -167,8 +227,14 @@ def booking_view(request):
                     hall,
                     date,
                     time,
-                    get_occupied_seats(movie, cinema, hall, date, time),
-                    error="Місце щойно забронювали. Виберіть інше місце.",
+                    get_occupied_seats(
+                        movie,
+                        cinema,
+                        hall,
+                        date,
+                        time,
+                    ),
+                    error="Місце вже заброньоване.",
                 ),
             )
 
@@ -181,8 +247,14 @@ def booking_view(request):
                 hall,
                 date,
                 time,
-                get_occupied_seats(movie, cinema, hall, date, time),
-                msg="Бронювання створено успішно. Через 5 секунд ви повернетесь на головну.",
+                get_occupied_seats(
+                    movie,
+                    cinema,
+                    hall,
+                    date,
+                    time,
+                ),
+                msg="Бронювання успішне.",
             ),
         )
 
@@ -195,13 +267,23 @@ def booking_view(request):
             hall,
             date,
             time,
-            get_occupied_seats(movie, cinema, hall, date, time),
+            get_occupied_seats(
+                movie,
+                cinema,
+                hall,
+                date,
+                time,
+            ),
         ),
     )
 
 
 def parse_selected_seats(raw_seats):
-    return [seat.strip().upper() for seat in raw_seats.split(",") if seat.strip()]
+    return [
+        seat.strip().upper()
+        for seat in raw_seats.split(",")
+        if seat.strip()
+    ]
 
 
 def get_seat_type(seat_code):
@@ -224,7 +306,16 @@ def get_occupied_seats(movie, cinema, hall, date, time):
     )
 
 
-def get_booking_context(movie, cinema, hall, date, time, occupied_seats, msg=None, error=None):
+def get_booking_context(
+    movie,
+    cinema,
+    hall,
+    date,
+    time,
+    occupied_seats,
+    msg=None,
+    error=None,
+):
     booking_count = Booking.objects.filter(
         movie=movie,
         cinema=cinema,
@@ -232,6 +323,15 @@ def get_booking_context(movie, cinema, hall, date, time, occupied_seats, msg=Non
         date=date,
         time=time,
     ).count()
+
+    history = (
+        f"Заброньовано місць: {len(occupied_seats)}"
+        if occupied_seats
+        else None
+    )
+
+    rating = MOVIE_RATINGS.get(movie, "0+")
+
     return {
         "movie": movie,
         "cinema": cinema,
@@ -239,7 +339,9 @@ def get_booking_context(movie, cinema, hall, date, time, occupied_seats, msg=Non
         "date": date,
         "time": time,
         "time_range": DEFAULT_TIME_RANGE,
+        "rating": rating,
         "booking_count": booking_count,
+        "history": history,
         "occupied_seats": occupied_seats,
         "msg": msg,
         "error": error,

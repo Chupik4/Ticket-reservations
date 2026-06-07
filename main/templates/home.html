@@ -1,102 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Multiplix Cinema{% endblock %}
-{% block body_class %}home-page{% endblock %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=6" />
-{% endblock %}
-{% block extra_js %}
 <script src="{% static 'main/js/home.js' %}?v=1" defer></script>
-{% endblock %}
-
 {% block content %}
-<main class="home-main">
-  <section class="home-hero" data-movie-carousel>
-    <div class="home-hero-copy">
-      <p class="home-kicker" data-movie-kicker>Прем'єра тижня</p>
-      <h1 data-movie-title>Дуже страшне кіно</h1>
-      <p class="home-lead" data-movie-description>
-        Відкрийте для себе нову комедію жахів, яка вже підкорила серця глядачів.
-        Ідеальний вибір для вечірнього перегляду з друзями.
-      </p>
-      <div class="home-actions">
-        <a class="home-btn primary" href="/booking/?movie=Дуже%20страшне%20кіно" data-booking-link>Забронювати місця</a>
-      </div>
-    </div>
-
-    <div class="show-carousel">
-      <button class="carousel-btn prev" type="button" data-carousel-prev aria-label="Попередній фільм">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-
-      <div class="show-card" aria-label="Картка сеансу">
-        <div class="show-poster" data-movie-poster>
-          <span class="rating" data-movie-rating>18+</span>
-          <div class="poster-light"></div>
-          <strong data-movie-card-title>Дуже страшне кіно</strong>
+    <main class="home-main">
+      <section class="home-hero">
+        <div class="home-hero-copy">
+          <p class="home-kicker">Прем'єра тижня</p>
+          <h1>Дуже страшне кіно</h1>
+          <p class="home-lead">
+            Відкрийте для себе нову комедію жахів, яка вже підкорила серця глядачів по всьому світу. Ідеальний вибір для вечірнього перегляду з друзями!
+          </p>
+          <div class="home-actions">
+            <a class="home-btn primary" href="/booking/">Забронювати місця</a>
+          </div>
         </div>
-        <div class="show-meta">
-          <span data-movie-format>2D</span>
-          <span data-movie-subtitle>SDH</span>
-          <span data-movie-hall>Зал №3</span>
+
+        <div class="show-card" aria-label="Картка сеансу">
+          <div class="show-poster">
+            <span class="rating">0+</span>
+            <div class="poster-light"></div>
+            <strong>Дуже страшне кіно</strong>
+          </div>
+          <div class="show-meta">
+            <span>2D</span>
+            <span>SDH</span>
+            <span>Зал №3</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <button class="carousel-btn next" type="button" data-carousel-next aria-label="Наступний фільм">
-        <i class="fas fa-chevron-right"></i>
-      </button>
-    </div>
+      <section class="schedule-strip" aria-label="Інформація про сеанс">
+        <article>
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <span>Кінотеатр</span>
+            <strong>Одеса, ТРЦ Gagarinn Plaza</strong>
+          </div>
+        </article>
+        <article>
+          <i class="fas fa-calendar-alt"></i>
+          <div>
+            <span>Дата</span>
+            <strong>03.06.2026, середа</strong>
+          </div>
+        </article>
+        <article>
+          <i class="far fa-clock"></i>
+          <div>
+            <span>Час</span>
+            <strong>18:40 - 20:15</strong>
+          </div>
+        </article>
+      </section>
 
-    <div class="carousel-dots" data-carousel-dots aria-label="Перемикання фільмів"></div>
-  </section>
-
-  <section class="schedule-strip" aria-label="Інформація про сеанс">
-    <article>
-      <i class="fas fa-map-marker-alt"></i>
-      <div>
-        <span>Кінотеатр</span>
-        <strong>Одеса, ТРЦ Gagarinn Plaza</strong>
-      </div>
-    </article>
-    <article>
-      <i class="fas fa-calendar-alt"></i>
-      <div>
-        <span>Дата</span>
-        <strong>03.06.2026, середа</strong>
-      </div>
-    </article>
-    <article>
-      <i class="far fa-clock"></i>
-      <div>
-        <span>Час</span>
-        <strong>18:40 - 20:15</strong>
-      </div>
-    </article>
-  </section>
-
-  <section class="home-section">
-    <div class="section-heading">
-      <p class="home-kicker">Сервіс</p>
-      <h2>Бронювання, яке пам'ятає ваш вибір</h2>
-    </div>
-    <div class="benefits">
-      <article>
-        <i class="fas fa-chair"></i>
-        <h3>Жива схема залу</h3>
-        <p>Вільні, вибрані та заброньовані місця видно одразу.</p>
-      </article>
-      <article>
-        <i class="fas fa-database"></i>
-        <h3>Збереження в базі</h3>
-        <p>Після перезаходу заброньовані крісла залишаються зайнятими.</p>
-      </article>
-      <article>
-        <i class="fas fa-ticket-alt"></i>
-        <h3>Швидке оформлення</h3>
-        <p>Вибрали місця, ввели дані покупця і готово.</p>
-      </article>
-    </div>
-  </section>
-</main>
+      <section class="home-section">
+        <div class="section-heading">
+          <p class="home-kicker">Сервіс</p>
+          <h2>Бронювання, яке пам'ятає ваш вибір</h2>
+        </div>
+        <div class="benefits">
+          <article>
+            <i class="fas fa-chair"></i>
+            <h3>Жива схема залу</h3>
+            <p>Вільні, вибрані та заброньовані місця видно одразу.</p>
+          </article>
+          <article>
+            <i class="fas fa-database"></i>
+            <h3>Збереження в базі</h3>
+            <p>Після перезаходу заброньовані крісла залишаються зайнятими.</p>
+          </article>
+          <article>
+            <i class="fas fa-ticket-alt"></i>
+            <h3>Швидке оформлення</h3>
+            <p>Вибрали місця, ввели дані покупця і готово.</p>
+          </article>
+        </div>
+      </section>
+    </main>
 {% endblock %}

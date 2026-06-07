@@ -37,7 +37,7 @@ class BookingSeat(models.Model):
     seat_code = models.CharField(max_length=10)
     seat_type = models.CharField(max_length=20)
     price = models.PositiveIntegerField()
-
+    
     class Meta:
         constraints = [
             models.UniqueConstraint(

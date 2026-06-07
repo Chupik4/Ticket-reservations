@@ -64,7 +64,7 @@ movies.forEach((movie, index) => {
   dot.type = "button";
   dot.setAttribute("aria-label", movie.title);
   dot.addEventListener("click", () => showMovie(index));
-  dots.appendChild(dot);
+  dot.appendChild(dot);
 });
 
 function showMovie(index) {
