@@ -5,20 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Multiplix Cinema{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'main/css/home.css' %}" />
     <link rel="stylesheet" href="{% static 'main/css/base.css' %}" />
-    <link rel="stylesheet" href="{% static 'main/css/booking.css' %}" />
-    <link rel="stylesheet" href="{% static 'main/css/profile.css' %}" />
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+    {% block extra_css %}{% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   </head>
   <body class="{% block body_class %}{% endblock %}">
-    <script src="{% static 'main/js/home.js' %}"></script>
     <header class="app-header">
       <a class="app-logo" href="/">Multiplix</a>
       <nav class="app-nav">
+        {% block app_nav %}
         <a href="/profile/"><i class="fas fa-user"></i> Профіль</a>
+        {% endblock %}
       </nav>
+      {% block header_extra %}{% endblock %}
     </header>
 
     {% block content %}{% endblock %}
@@ -26,9 +26,7 @@
     <footer class="app-footer">
       <p>2026 Multiplix Cinema. Всі права захищені.</p>
     </footer>
-    <script src="{% static 'main/js/home.js' %}"></script>
-    <script src="{% static 'main/js/profile.js' %}"></script>
-    <script src="{% static 'main/js/booking.js' %}"></script>
 
+    {% block extra_js %}{% endblock %}
   </body>
 </html>

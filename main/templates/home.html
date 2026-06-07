@@ -1,31 +1,50 @@
 {% extends "base.html" %}
 {% load static %}
-<script src="{% static 'main/js/home.js' %}?v=1" defer></script>
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=3" />
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'main/js/home.js' %}?v=3" defer></script>
+{% endblock %}
+
 {% block content %}
-    <main class="home-main">
+    <main class="home-main" data-movie-carousel>
       <section class="home-hero">
         <div class="home-hero-copy">
-          <p class="home-kicker">Прем'єра тижня</p>
-          <h1>Дуже страшне кіно</h1>
-          <p class="home-lead">
+          <p class="home-kicker" data-movie-kicker>Прем'єра тижня</p>
+          <h1 data-movie-title>Дуже страшне кіно</h1>
+          <p class="home-lead" data-movie-description>
             Відкрийте для себе нову комедію жахів, яка вже підкорила серця глядачів по всьому світу. Ідеальний вибір для вечірнього перегляду з друзями!
           </p>
           <div class="home-actions">
-            <a class="home-btn primary" href="/booking/">Забронювати місця</a>
+            <a class="home-btn primary" href="/booking/" data-booking-link>Забронювати місця</a>
           </div>
         </div>
 
-        <div class="show-card" aria-label="Картка сеансу">
-          <div class="show-poster">
-            <span class="rating">0+</span>
-            <div class="poster-light"></div>
-            <strong>Дуже страшне кіно</strong>
+        <div class="show-carousel">
+          <button type="button" class="carousel-btn prev" data-carousel-prev aria-label="Попередній фільм">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          <div class="show-card" aria-label="Картка сеансу">
+            <div class="show-poster" data-movie-poster>
+              <span class="rating" data-movie-rating>18+</span>
+              <div class="poster-light"></div>
+              <strong data-movie-card-title>Дуже страшне кіно</strong>
+            </div>
+            <div class="show-meta">
+              <span data-movie-format>2D</span>
+              <span data-movie-subtitle>SDH</span>
+              <span data-movie-hall>Зал №3</span>
+            </div>
           </div>
-          <div class="show-meta">
-            <span>2D</span>
-            <span>SDH</span>
-            <span>Зал №3</span>
-          </div>
+
+          <div class="carousel-dots" data-carousel-dots></div>
+
+          <button type="button" class="carousel-btn next" data-carousel-next aria-label="Наступний фільм">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
       </section>
 
